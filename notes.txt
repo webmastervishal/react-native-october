@@ -1,2 +1,9 @@
 
 github url: https://github.com/webmastervishal/react-native-october
+
+Module 10: 
+
+1) https://reactnavigation.org/
+2) https://reactnative.dev/docs/asyncstorage
+3) https://reactnative.dev/docs/navigation
+4) https://reactnative.dev/docs/signed-apk-android

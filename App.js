@@ -1,79 +1,23 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  TextInput,
-  Button,
-  FlatList,
-} from "react-native";
-import { styles } from "./styles";
-import { useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./src/screens/Home";
+import Currency from "./src/screens/Currency";
+import { Provider } from "react-redux";
+import store from "./src/store/store";
 
-export default function App() {
-  const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState([]);
-  console.log("todos", todos);
+const Stack = createNativeStackNavigator();
 
-  // [{
-  //   id: 1,
-  //   todo: "learn js"
-  // },{
-  //   id: 2,
-  //   todo: "learn node js"
-  // }]
-
-  handleTodos = () => {
-    setTodos([...todos, { id: todos.length + 1, todo }]);
-    setTodo("");
-  };
-
-  handleDeleteTodo = (id) => {
-    console.log("id to be deleted", id);
-    setTodos(todos.filter((todo) => id !== todo.id));
-  };
-
-  const renderItems = ({ item }) => {
-    return (
-      <View style={styles.item}>
-        <Text>{item.todo}</Text>
-        <AntDesign
-          name="delete"
-          size={24}
-          color="black"
-          onPress={() => handleDeleteTodo(item.id)}
-        />
-      </View>
-    );
-  };
-
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Todo Application</Text>
-
-      <View style={styles.todoWrapper}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setTodo(text)}
-          value={todo}
-        />
-        <Button onPress={handleTodos} title="Add Todo" />
-      </View>
-
-      <View style={styles.listWrapper}>
-        <FlatList
-          data={todos}
-          renderItem={renderItems}
-          keyExtractor={(todo) => todo.id}
-        />
-      </View>
-
-      <StatusBar style="auto" />
-    </View>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Currency" component={Currency} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
-}
+};
 
-{
-  /* <input type="text" onChange={(e) => setTodo(e.target.value)} />; */
-}
+export default App;
